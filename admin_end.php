@@ -1,6 +1,10 @@
 <?php
 ob_start();
-
+// WP_List_Table is not loaded automatically so we need to load it in our application
+if( ! class_exists( 'WP_List_Table' ) ) {
+    require_once( ABSPATH . 'wp-admin/includes/class-wp-list-table.php' );
+}
+include('include/order-list.php');
 //Adding menu
 add_action('admin_menu', 'cam_main_menu');
 add_action('admin_menu', 'trip_main_menu');
@@ -9,7 +13,7 @@ function cam_main_menu(){
     add_menu_page( 'Custom Agent Management Main Menu', 'Custom Agent Management', 'manage_options', 'custom-agent-management-main-menu', 'mainCustomerAgentFunction' );
 	add_submenu_page("custom-agent-management-main-menu", "Add Agent", "Add Agent", "manage_options", "add-agent", "addAgentFunction");
 	add_submenu_page("custom-agent-management-main-menu", "Agent List", "Agent List", "manage_options", "agent-list", "agentListFunction");
-	add_submenu_page("custom-agent-management-main-menu", "Order List", "Order List", "manage_options", "order-list", "orderListFunction");
+	add_submenu_page("custom-agent-management-main-menu", "Order List", "Order List", "manage_options", "order-list", "camOrderListFunction");
 	add_submenu_page("custom-agent-management-main-menu", "Tickets", "Tickets", "manage_options", "tickets", "ticketsFunction");
 }
 
@@ -19,10 +23,7 @@ function trip_main_menu(){
 	add_submenu_page("trip", "Trip List", "Trip List", "manage_options", "trip-list", "tripListFunction");
 }
 
-// WP_List_Table is not loaded automatically so we need to load it in our application
-if( ! class_exists( 'WP_List_Table' ) ) {
-    require_once( ABSPATH . 'wp-admin/includes/class-wp-list-table.php' );
-}
+
 
 //Function Custom Agent Management Main Page
 function mainCustomerAgentFunction(){
@@ -443,10 +444,6 @@ function agentListFunction(){
 			<?php
 }
 
-//Function for Order List
-function orderListFunction(){
-  echo "ORDER LIST";
-}
 
 //Function for tickets
 function ticketsFunction(){
