@@ -10,10 +10,55 @@ add_action('wp_enqueue_scripts','cam_enqueue_related_pages_scripts_and_styles');
 //Create new order function
 function cam_create_new_order(){
   ob_start();
-
-  
   global $wpdb;
-  $table_name      = $wpdb->prefix . 'trip_location';
+  if ( isset( $_POST['order_submit'] ) && isset( $_POST['order_type'])) {
+    $user_id = 1;
+    $order_type       = $_POST['order_type'];
+    $visa_number      = $_POST['visa_number'];
+    $no_of_person     = $_POST['no_of_person'];
+
+    if (isset( $_POST['trip_location_id'] )) {
+      $trip_location_id = $_POST['trip_location_id'];
+    }else {
+      $trip_location_id = '';
+    }
+
+    $no_of_tickets    = $_POST['no_of_tickets'];
+    if (isset( $_POST['direction'] )) {
+      $direction        = $_POST['direction'];
+    }else {
+      $direction = '';
+    }
+
+    $ticket_date      = $_POST['ticket_date'];
+    $other_text       = $_POST['other_text'];
+    $status           = $_POST['status'];
+
+    // insert dsta to database except photo
+		$table_name = $wpdb->prefix . 'cam_orders'; //to get the table name
+
+    $wpdb->insert($table_name, array(
+       "user_id"          => $user_id,
+       "order_type"       => $order_type,
+       "visa_number"      => $visa_number,
+       "no_of_person"     => $no_of_person,
+       "trip_location_id" => $trip_location_id,
+       "no_of_tickets"    => $no_of_tickets,
+       "direction"        => $direction,
+       "ticket_date"      => $ticket_date,
+       "other_text"       => $other_text,
+       "status"           => $status
+		));
+
+		// last inserted id
+		$lastid = $wpdb->insert_id;
+    if ($lastid != null) {
+      echo "Order Added Successfully Added Successfully";
+    }
+
+  }
+
+  $table_name      = $wpdb->prefix . 'cam_trip_location';
   $trips           = $wpdb->get_results( "SELECT * FROM ".$table_name, OBJECT );
 
   $options_html = '';
@@ -34,16 +79,16 @@ function cam_create_new_order(){
       </select>
 
       <div class="visa_order_form" style="display:none;">
-        <label for="no_of_requested_visas" style="display: block; margin-bottom: 5px;">Number Of Requested Visas</label>
-        <input type="number" name="no_of_requested_visas" value="" style="width: 400px; padding: 10px;">
+        <label for="visa_number" style="display: block; margin-bottom: 5px;">Number Of Requested Visas</label>
+        <input type="number" name="visa_number" value="" style="width: 400px; padding: 10px;">
       </div>
 
       <div class="tourism_trip" style="display:none;">
-        <label for="no_of_persons" style="display: block; margin-bottom: 5px;">Number Of Persons</label>
-        <input type="number" name="no_of_persons" value="" style="width: 400px; padding: 10px;">
+        <label for="no_of_person" style="display: block; margin-bottom: 5px;">Number Of Persons</label>
+        <input type="number" name="no_of_person" value="" style="width: 400px; padding: 10px;">
 
-        <label for="trip_location" style="display: block; margin-bottom: 5px;">Select Trip Location</label>
-        <select name="trip_location" id="trip_location" style="width: 400px; height: 40px;">
+        <label for="trip_location_id" style="display: block; margin-bottom: 5px;">Select Trip Location</label>
+        <select name="trip_location_id" id="trip_location_id" style="width: 400px; height: 40px;">
           <option disabled selected>Select Trip Location</option>
           '.$options_html.'
           </select>
@@ -67,7 +112,7 @@ function cam_create_new_order(){
 
       <div class="other_order_form" style="display:none;">
         <label for="other_text" style="display: block; margin-bottom: 5px;">Description</label>
-        <input type="number" name="other_text" value="" style="width: 400px; padding: 10px;">
+        <textarea name="other_text" rows="8" cols="80"></textarea>
       </div>
 
 
@@ -79,7 +124,7 @@ function cam_create_new_order(){
 
       <input name="status" type="hidden" value="pending"/>
 
-      <button type="submit" name="order_type_submit" value="submit" style="padding: 10px; margin-top: 20px; background-color: #20b368; color: #fff; border-width: 0px;">Submit</button>
+      <button type="submit" name="order_submit" value="submit" style="padding: 10px; margin-top: 20px; background-color: #20b368; color: #fff; border-width: 0px;">Submit</button>
     </form>
   ';
   return ob_get_clean();

@@ -648,7 +648,7 @@ function addTripFunction(){
     $name       = $_POST['name'];
 
     // insert dsta to database except photo
-		$table_name = $wpdb->prefix . 'trip_location'; //to get the table name
+		$table_name = $wpdb->prefix . 'cam_trip_location'; //to get the table name
 
     $wpdb->insert($table_name, array(
 		   "name" => $name,
