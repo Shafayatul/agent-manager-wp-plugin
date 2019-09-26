@@ -53,6 +53,36 @@ function cam_create_new_order(){
 		// last inserted id
 		$lastid = $wpdb->insert_id;
     if ($lastid != null) {
+
+
+
+    /**
+    * uploading files
+    */
+    $total = count($_FILES['file']['name']);
+    // Loop through each file
+    for( $i=0 ; $i < $total ; $i++ ) {
+      //Get the temp file path
+      $tmpFilePath = $_FILES['file']['tmp_name'][$i];
+      //Make sure we have a file path
+      if ($tmpFilePath != ""){
+        $uploaded_file = wp_upload_bits( $_FILES['file']['name'][$i], null, @file_get_contents( $_FILES['file']['tmp_name'][$i] ) );
+
+        
+        $table_name = $wpdb->prefix . 'cam_files'; //to get the table name
+
+        $wpdb->insert($table_name, array(
+           "order_id" => $lastid,
+           "url"      => $uploaded_file['url']
+        ));
+
+      }
+    } //file upload ends
+
+
+
+
+
       echo "Order Added Successfully Added Successfully";
     }
 
