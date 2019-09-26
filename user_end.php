@@ -34,7 +34,7 @@ function cam_create_new_order(){
     $other_text       = $_POST['other_text'];
     $status           = $_POST['status'];
 
-    // insert dsta to database except photo
+    // insert dsta to database except file
 		$table_name = $wpdb->prefix . 'cam_orders'; //to get the table name
 
     $wpdb->insert($table_name, array(
@@ -68,7 +68,7 @@ function cam_create_new_order(){
       if ($tmpFilePath != ""){
         $uploaded_file = wp_upload_bits( $_FILES['file']['name'][$i], null, @file_get_contents( $_FILES['file']['tmp_name'][$i] ) );
 
-        
+
         $table_name = $wpdb->prefix . 'cam_files'; //to get the table name
 
         $wpdb->insert($table_name, array(
@@ -163,11 +163,51 @@ function cam_create_new_order(){
 //Shortcodes create_new_orders
 add_shortcode('cam-create-new-order', 'cam_create_new_order');
 
-//Visa Order Form
-function visaOrderForm(){
+
+//Create new Ticket function
+function cam_create_new_ticket(){
   ob_start();
+  global $wpdb;
+
+  if ( isset( $_POST['ticket_submit'] ) ) {
+
+    $description = $_POST['ticket_description'];
+
+    // insert dsta to database except file
+    $table_name = $wpdb->prefix . 'cam_tickets'; //to get the table name
+
+    $wpdb->insert($table_name, array(
+       "description" => $description
+    ));
+
+    // last inserted id
+    $lastid = $wpdb->insert_id;
+    echo 'DATA SUBMITTED '.$lastid;
+  }
+
+  echo '
+    <form action="" method="post" enctype="multipart/form-data" style="margin-bottom: 20px; padding: 20px;">
+
+      <div class="ticket_description">
+        <label for="ticket_description" style="display: block; margin-bottom: 5px;">Description</label>
+        <textarea name="ticket_description" rows="8" cols="80"></textarea>
+      </div>
+
+
+      <label for="ticket_file" style="display: block; margin-top: 20px; margin-bottom: 5px;">Upload Files</label>
+      <input name="file[]" type="file" id="ticket_file"/>
+      <button class="add_more">Add More Files</button>
+
+
+      <button type="submit" name="ticket_submit" value="submit" style="padding: 10px; margin-top: 20px; background-color: #20b368; color: #fff; border-width: 0px;">Submit</button>
+    </form>
+  ';
 
   return ob_get_clean();
 }
+
+
+//Shortcodes create_new_tickets
+add_shortcode('cam-create-new-ticket', 'cam_create_new_ticket');
 
 ?>

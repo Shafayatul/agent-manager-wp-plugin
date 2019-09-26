@@ -50,11 +50,24 @@ function cam_create_trip_location_table(){
       dbDelta( $sql );
     }
 
+    $table_name = $wpdb->prefix . 'cam_tickets';
+    if($wpdb->get_var("SHOW TABLES LIKE '$table_name'") != $table_name) {
+      $sql = "CREATE TABLE $table_name (
+  		  id int(11) NOT NULL AUTO_INCREMENT,
+  		  description varchar(191) DEFAULT NULL,
+  		  PRIMARY KEY id (id)
+  		);";
+      require_once( ABSPATH . 'wp-admin/includes/upgrade.php' );
+      dbDelta( $sql );
+    }
+
+
     $table_name = $wpdb->prefix . 'cam_files';
     if($wpdb->get_var("SHOW TABLES LIKE '$table_name'") != $table_name) {
       $sql = "CREATE TABLE $table_name (
   		  id int(11) NOT NULL AUTO_INCREMENT,
   		  order_id int(11) DEFAULT NULL,
+  		  ticket_id int(11) DEFAULT NULL,
         url varchar(191) DEFAULT NULL,
   		  PRIMARY KEY id (id)
   		);";
