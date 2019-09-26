@@ -1,16 +1,17 @@
 <?php
 ob_start();
 //Calling custom js file
-function enqueue_related_pages_scripts_and_styles(){
+function cam_enqueue_related_pages_scripts_and_styles(){
         // wp_enqueue_style('related-styles', plugins_url('/css/bootstrap.min.css', __FILE__));
         wp_enqueue_script('releated-script', plugins_url( '/js/custom.js' , __FILE__ ), array('jquery','jquery-ui-droppable','jquery-ui-draggable', 'jquery-ui-sortable'));
     }
-add_action('wp_enqueue_scripts','enqueue_related_pages_scripts_and_styles');
+add_action('wp_enqueue_scripts','cam_enqueue_related_pages_scripts_and_styles');
 
 //Create new order function
-function create_new_order(){
+function cam_create_new_order(){
   ob_start();
 
+  
   global $wpdb;
   $table_name      = $wpdb->prefix . 'trip_location';
   $trips           = $wpdb->get_results( "SELECT * FROM ".$table_name, OBJECT );
@@ -79,13 +80,13 @@ function create_new_order(){
       <input name="status" type="hidden" value="pending"/>
 
       <button type="submit" name="order_type_submit" value="submit" style="padding: 10px; margin-top: 20px; background-color: #20b368; color: #fff; border-width: 0px;">Submit</button>
-    <form>
+    </form>
   ';
-
+  return ob_get_clean();
 }
 
 //Shortcodes create_new_orders
-add_shortcode('create_new_orders', 'create_new_order');
+add_shortcode('cam-create-new-order', 'cam_create_new_order');
 
 //Visa Order Form
 function visaOrderForm(){
