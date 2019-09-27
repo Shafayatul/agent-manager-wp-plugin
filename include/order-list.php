@@ -45,12 +45,11 @@ class Cam_Order_List_Table extends WP_List_Table {
 	public function get_columns(){
 
 		$columns = array(
-			'ID'    => 'ID',
-			'EMAIL'   => 'EMAIL',
-			'PHONE'	  => 'PHONE',
-			'ADDRESS' => 'ADDRESS',
-			'COUNTRY' => 'COUNTRY',
-			'ACTION'  => 'ACTION'
+			'ORDER NUMBER' => 'ORDER NUMBER',
+			'DATE'         => 'DATE',
+			'NAME'	       => 'NAME',
+			'ADDRESS'      => 'ADDRESS',
+			'ACTION'       => 'ACTION'
 		);
 
 		return $columns;
@@ -61,7 +60,7 @@ class Cam_Order_List_Table extends WP_List_Table {
 	}
 
 	public function get_sortable_columns() {
-		return array('ID' => array('ID', false));
+		return array('ORDER NUMBER' => array('ORDER NUMBER', false));
 	}
 
 	private function table_data() {
@@ -80,11 +79,11 @@ class Cam_Order_List_Table extends WP_List_Table {
 
 
 		foreach($users as $user){
-			$meta_data = get_user_meta($user->ID);
+			$meta_data = get_user_meta($user->ORDER NUMBER);
 			$data[] = array(
-				'ID'      => $user->user_login,
-				'EMAIL'     => $user->user_email,
-				'PHONE' 	  => $meta_data['phone'][0],
+				'ORDER NUMBER'      => $user->user_login,
+				'DATE'     => $user->user_email,
+				'NAME' 	  => $meta_data['phone'][0],
 				'ADDRESS'   => $meta_data['address'][0],
 				'COUNTRY'   => $meta_data['country'][0],
 				'ACTION'    => ''
@@ -96,11 +95,10 @@ class Cam_Order_List_Table extends WP_List_Table {
 
 	public function column_default( $item, $column_name ) {
 		switch( $column_name ) {
-			case 'ID':
-			case 'EMAIL':
-			case 'PHONE':
-			case 'ADDRESS':
-			case 'COUNTRY':
+			case 'ORDER NUMBER':
+			case 'DATE':
+			case 'NAME':
+			case 'STATUS':
 			case 'ACTION':
 			return $item[ $column_name ];
 
@@ -111,7 +109,7 @@ class Cam_Order_List_Table extends WP_List_Table {
 
 	private function sort_data( $a, $b ) {
 			// Set defaults
-		$orderby = 'ID';
+		$orderby = 'ORDER NUMBER';
 		$order = 'asc';
 
 			// If orderby is set, use this as the sort column
