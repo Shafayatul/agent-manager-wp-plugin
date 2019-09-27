@@ -48,7 +48,7 @@ class Cam_Order_List_Table extends WP_List_Table {
 			'ORDER NUMBER' => 'ORDER NUMBER',
 			'DATE'         => 'DATE',
 			'NAME'	       => 'NAME',
-			'ADDRESS'      => 'ADDRESS',
+			'STATUS'      => 'STATUS',
 			'ACTION'       => 'ACTION'
 		);
 
@@ -72,15 +72,15 @@ class Cam_Order_List_Table extends WP_List_Table {
 		foreach($orders as $order){
 			$table_name = $wpdb->prefix . 'users';
 			$user       = $wpdb->get_results( "SELECT * FROM ".$table_name." WHERE id='".$order->user_id."'", OBJECT );
-			$meta_data  = get_user_meta($user->ID);
+			$meta_data  = get_user_meta($order->user_id);
 			$data[] = array(
 				'ORDER NUMBER' => $order->id,
 				'DATE'         => $order->submission_date,
-				'NAME' 	       => $user->user_login,
-				'ADDRESS'      => $meta_data['address'][0],
-				'COUNTRY'      => $meta_data['country'][0],
-				'ACTION'       => ''
-					// 'Action'      => '<a href="'.admin_url().'?page=cmr-edit-member&pervious_page=pending-member&id='.$user->id.'" class="button button-primary">Edit</a>&nbsp;<a href="'.admin_url().'?page=cmr-delete-member&pervious_page=pending-member&id='.$user->id.'" class="button button-primary">Delete</a>&nbsp;<a  href="'.admin_url().'?page=cmr-detail-member&id='.$user->id.'" class="button button-primary">Detail</a>'
+				'NAME' 	       => isset($meta_data['fullName'][0])? $meta_data['fullName'][0]: '--',
+				'STATUS'       => isset($meta_data['address'][0])? $meta_data['address'][0]: '--',
+				'ACTION'       => '
+					<a  href="'.admin_url().'?page=cam-detail-item&table=cam_orders&id='.$order->id.'" class="button button-primary">Detail</a>&nbsp;
+					<a href="'.admin_url().'?page=cam-delete-item&table=cam_orders&id='.$order->id.'" class="button button-primary">Delete</a>'
 			);
 		}
 		return $data;
@@ -105,7 +105,7 @@ class Cam_Order_List_Table extends WP_List_Table {
 		$orderby = 'ORDER NUMBER';
 		$order = 'asc';
 
-			// If orderby is set, use this as the sort column
+		// If orderby is set, use this as the sort column
 		if(!empty($_GET['orderby']))
 		{
 			$orderby = $_GET['orderby'];

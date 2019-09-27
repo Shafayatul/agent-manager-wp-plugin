@@ -64,16 +64,17 @@ class Ticket_List_Table extends WP_List_Table {
 	private function table_data() {
 	   $data            = array();
 	   global $wpdb;
-	   $table_name      = $wpdb->prefix . 'cam_ticket';
+	   $table_name      = $wpdb->prefix . 'cam_tickets';
 	   $tickets           = $wpdb->get_results( "SELECT * FROM ".$table_name, OBJECT );
 
 
 			foreach($tickets as $ticket){
 				$data[] = array(
-						'ID'     => $ticket->id,
-						'DESCRIPTION'   => $ticket->description,
-						'ACTION' => ''
-						// 'Action'      => '<a href="'.admin_url().'?page=cmr-edit-member&pervious_page=pending-member&id='.$user->id.'" class="button button-primary">Edit</a>&nbsp;<a href="'.admin_url().'?page=cmr-delete-member&pervious_page=pending-member&id='.$user->id.'" class="button button-primary">Delete</a>&nbsp;<a  href="'.admin_url().'?page=cmr-detail-member&id='.$user->id.'" class="button button-primary">Detail</a>'
+						'ID'          => $ticket->id,
+						'DESCRIPTION' => $ticket->description,
+						'ACTION'      => '
+						<a  href="'.admin_url().'?page=cam-detail-item&table=cam_tickets&id='.$ticket->id.'" class="button button-primary">Detail</a>&nbsp;
+						<a href="'.admin_url().'?page=cam-delete-item&table=cam_tickets&id='.$ticket->id.'" class="button button-primary">Delete</a>'
 						);
 			}
 		return $data;

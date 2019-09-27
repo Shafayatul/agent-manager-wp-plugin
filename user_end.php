@@ -13,10 +13,10 @@ function cam_create_new_order(){
   if (is_user_logged_in()) {
     global $wpdb;
     if ( isset( $_POST['order_submit'] ) && isset( $_POST['order_type'])) {
-      $user_id = get_current_user_id();
-      $order_type       = $_POST['order_type'];
-      $visa_number      = $_POST['visa_number'];
-      $no_of_person     = $_POST['no_of_person'];
+      $user_id      = get_current_user_id();
+      $order_type   = $_POST['order_type'];
+      $visa_number  = $_POST['visa_number'];
+      $no_of_person = $_POST['no_of_person'];
 
       if (isset( $_POST['trip_location_id'] )) {
         $trip_location_id = $_POST['trip_location_id'];
@@ -38,7 +38,7 @@ function cam_create_new_order(){
       // insert dsta to database except file
   		$table_name = $wpdb->prefix . 'cam_orders'; //to get the table name
 
-      $wpdb->insert($table_name, array(
+      $sdfsdf = $wpdb->insert($table_name, array(
          "user_id"          => $user_id,
          "order_type"       => $order_type,
          "visa_number"      => $visa_number,

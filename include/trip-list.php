@@ -72,8 +72,7 @@ class Trip_List_Table extends WP_List_Table {
 				$data[] = array(
 						'ID'     => $trip->id,
 						'NAME'   => $trip->name,
-						'ACTION' => ''
-						// 'Action'      => '<a href="'.admin_url().'?page=cmr-edit-member&pervious_page=pending-member&id='.$user->id.'" class="button button-primary">Edit</a>&nbsp;<a href="'.admin_url().'?page=cmr-delete-member&pervious_page=pending-member&id='.$user->id.'" class="button button-primary">Delete</a>&nbsp;<a  href="'.admin_url().'?page=cmr-detail-member&id='.$user->id.'" class="button button-primary">Detail</a>'
+						'ACTION' => '<a href="'.admin_url().'?page=cam-delete-item&table=cam_trip_location&id='.$trip->id.'" class="button button-primary">Delete</a>'
 						);
 			}
 		return $data;
