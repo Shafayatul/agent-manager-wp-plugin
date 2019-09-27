@@ -44,6 +44,7 @@ function cam_create_trip_location_table(){
         ticket_date varchar(50) DEFAULT NULL,
         other_text varchar(80) DEFAULT NULL,
         status varchar(50) DEFAULT NULL,
+        submission_date date DEFAULT now(),
   		  PRIMARY KEY id (id)
   		);";
       require_once( ABSPATH . 'wp-admin/includes/upgrade.php' );

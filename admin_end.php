@@ -5,85 +5,54 @@ if( ! class_exists( 'WP_List_Table' ) ) {
     require_once( ABSPATH . 'wp-admin/includes/class-wp-list-table.php' );
 }
 include('include/order-list.php');
+include('include/trip-list.php');
+include('include/ticket-list.php');
 //Adding menu
 add_action('admin_menu', 'cam_main_menu');
-add_action('admin_menu', 'trip_main_menu');
 
 function cam_main_menu(){
-    add_menu_page( 'Custom Agent Management Main Menu', 'Custom Agent Management', 'manage_options', 'custom-agent-management-main-menu', 'mainCustomerAgentFunction' );
-	add_submenu_page("custom-agent-management-main-menu", "Add Agent", "Add Agent", "manage_options", "add-agent", "addAgentFunction");
-	add_submenu_page("custom-agent-management-main-menu", "Agent List", "Agent List", "manage_options", "agent-list", "agentListFunction");
-	add_submenu_page("custom-agent-management-main-menu", "Order List", "Order List", "manage_options", "order-list", "camOrderListFunction");
-	add_submenu_page("custom-agent-management-main-menu", "Tickets", "Tickets", "manage_options", "tickets", "ticketsFunction");
-}
+    add_menu_page( 'Custom Agent Management Main Menu', 'Custom Agent Management', 'manage_options', 'cam-custom-agent-management-main-menu', 'mainCustomerAgentFunction' );
+	add_submenu_page("custom-agent-management-main-menu", "Add Agent", "Add Agent", "manage_options", "cam-add-agent", "addAgentFunction");
+	add_submenu_page("custom-agent-management-main-menu", "Agent List", "Agent List", "manage_options", "cam-agent-list", "agentListFunction");
+	add_submenu_page("custom-agent-management-main-menu", "Order List", "Order List", "manage_options", "cam-order-list", "camOrderListFunction");
+    add_submenu_page("custom-agent-management-main-menu", "Order List", "Order List", "manage_options", "cam-order-list", "camOrderListFunction");
 
-function trip_main_menu(){
-    add_menu_page( 'Trip', 'Trip', 'manage_options', 'trip', 'mainTripFunction' );
-	add_submenu_page("trip", "Add Trip", "Add Trip", "manage_options", "add-trip", "addTripFunction");
-	add_submenu_page("trip", "Trip List", "Trip List", "manage_options", "trip-list", "tripListFunction");
+    // Trip
+    add_menu_page( 'Trip', 'Trip', 'manage_options', 'cam-trip', 'tripListFunction' );
+    add_submenu_page("trip", "Add Trip", "Add Trip", "manage_options", "cam-add-trip", "addTripFunction");
+
+    // Ticket
+    add_menu_page( 'Tickets', 'Tickets', 'manage_options', 'cam-ticket', 'ticketListFunction' );
 }
 
 
 
 //Function Custom Agent Management Main Page
 function mainCustomerAgentFunction(){
-	echo '
+  echo '
     <div class="wrap">
-      <h2>Club Member Registration </h2>
+      <h2>Add Trip</h2>
       <div class="welcome-panel"  id="welcome-panel">
         <h2>How to use: </h2><br>
         <h3>Use of shortcode: </h3>
-        There are three shortcode available for use.
+        There are two shortcodes available for use.
         <ul>
           <li>
-            <p><b>1. Registration form: </b></p>
+            <p><b>1. Offer form: </b></p>
             <p>
-              This shortcode is used for the registration form. Copy and paste <b>[cmr_form]</b> where you want to use the registration form.
+              This shortcode is used for the order form. Copy and paste <b>[cam-create-new-order]</b> where you want to use the offer form.
             </p>
           </li>
           <li>
-            <p><b>2. Active Member: </b></p>
+            <p><b>2. Ticket form: </b></p>
             <p>
-              This shortcode is used to show the active member on your website on a table. Copy and paste <b>[cmr_active_members]</b> where you want to use it.
+              For showing ticket form, one has to use [cam-create-new-ticket] shortcode.
             </p>
           </li>
-          <li>
-            <p><b>3. Executive Member: </b></p>
-            <p>
-              This shortcode is used to show the Executive member on your website on a table. Copy and paste <b>[cmr_executive_members]</b> where you want to use the registration form.
-            </p>
-          </li>
+          
         </ul>
       </div>
-      <div class="welcome-panel"  id="welcome-panel">
-        <h2>How to use: </h2><br>
-        <h3>Use of Admin panel: </h3>
-        There are three sub-menu available for use.
-        <ul>
-          <li>
-            <p><b>1. Pending Member: </b></p>
-            <p>
-              If someone have submitted the club member registration and you have not activated the member, he/she is a pending member.
-              In this menu all the pending member will be shown and there is a option to activate the member. When activating the the member, there is a option for
-              setting the time duration. It means how long the member can be activated can be predefined. After the time period the member will automatically deactivated.
-            </p>
-          </li>
-          <li>
-            <p><b>2. Deactivate Member: </b></p>
-            <p>
-              All the member will be displayed in the table and there will be option for deactivating the member.
-            </p>
-          </li>
-          <li>
-            <p><b>3. All Member: </b></p>
-            <p>
-              All the member will be displayed in the table and there will be option for deleting permanently  and view detail of each member. You also edit member detail through Edit option.
-            </p>
-          </li>
-        </ul>
-      </div>
-    </div>
-	';
+    ';
 }
 
 
@@ -445,11 +414,6 @@ function agentListFunction(){
 }
 
 
-//Function for tickets
-function ticketsFunction(){
-  echo "TICKETS";
-}
-
 //Create a new table class that will extend the WP_List_Table
 class Agent_List_Table extends WP_List_Table {
 	public function prepare_items()
@@ -576,60 +540,18 @@ public function column_default( $item, $column_name ) {
 function mainTripFunction(){
   echo '
     <div class="wrap">
-      <h2>Add Trip</h2>
+      <h2>Trip</h2>
       <div class="welcome-panel"  id="welcome-panel">
         <h2>How to use: </h2><br>
-        <h3>Use of shortcode: </h3>
-        There are three shortcode available for use.
         <ul>
           <li>
-            <p><b>1. Registration form: </b></p>
+            <p><b>About Trip: </b></p>
             <p>
-              This shortcode is used for the registration form. Copy and paste <b>[cmr_form]</b> where you want to use the registration form.
-            </p>
-          </li>
-          <li>
-            <p><b>2. Active Member: </b></p>
-            <p>
-              This shortcode is used to show the active member on your website on a table. Copy and paste <b>[cmr_active_members]</b> where you want to use it.
-            </p>
-          </li>
-          <li>
-            <p><b>3. Executive Member: </b></p>
-            <p>
-              This shortcode is used to show the Executive member on your website on a table. Copy and paste <b>[cmr_executive_members]</b> where you want to use the registration form.
+              It is being used in offer form.
             </p>
           </li>
         </ul>
       </div>
-      <div class="welcome-panel"  id="welcome-panel">
-        <h2>How to use: </h2><br>
-        <h3>Use of Admin panel: </h3>
-        There are three sub-menu available for use.
-        <ul>
-          <li>
-            <p><b>1. Pending Member: </b></p>
-            <p>
-              If someone have submitted the club member registration and you have not activated the member, he/she is a pending member.
-              In this menu all the pending member will be shown and there is a option to activate the member. When activating the the member, there is a option for
-              setting the time duration. It means how long the member can be activated can be predefined. After the time period the member will automatically deactivated.
-            </p>
-          </li>
-          <li>
-            <p><b>2. Deactivate Member: </b></p>
-            <p>
-              All the member will be displayed in the table and there will be option for deactivating the member.
-            </p>
-          </li>
-          <li>
-            <p><b>3. All Member: </b></p>
-            <p>
-              All the member will be displayed in the table and there will be option for deleting permanently  and view detail of each member. You also edit member detail through Edit option.
-            </p>
-          </li>
-        </ul>
-      </div>
-    </div>
 	';
 }
 
@@ -678,131 +600,4 @@ function addTripFunction(){
   </div>
   ';
 }
-
-//Function For Trip Lists
-function tripListFunction(){
-  $display_trip_table = new Trip_List_Table();
-			$display_trip_table->prepare_items();
-			?>
-				<div class="wrap">
-					<div id="icon-users" class="icon32"></div>
-					<h2>All Trip Location</h2><span>**List of all trip location</span>
-					<form method="post">
-						<input type="hidden" name="page" value="example_list_table" />
-						<?php //$display_agent_table->search_box('search', 'search_id'); ?>
-					</form>
-					<?php $display_trip_table->display(); ?>
-				</div>
-			<?php
-}
-
-//Create a new table class that will extend the WP_List_Table
-class Trip_List_Table extends WP_List_Table {
-	public function prepare_items() {
-		$columns               = $this->get_columns();
-		$hidden                = $this->get_hidden_columns();
-		$sortable              = $this->get_sortable_columns();
-
-		$data                  = $this->table_data();
-		usort( $data, array( &$this, 'sort_data' ) );
-
-		$perPage               = 20;
-		$currentPage           = $this->get_pagenum();
-		$totalItems            = count($data);
-
-		$this->set_pagination_args( array(
-			'total_items'        => $totalItems,
-			'per_page'           => $perPage
-		) );
-
-		$data = array_slice($data,(($currentPage-1)*$perPage),$perPage);
-
-		$this->_column_headers = array($columns, $hidden, $sortable);
-		$this->items           = $data;
-	}
-
-public function get_columns(){
-
-  $columns = array(
-    'NAME'     => 'NAME',
-  	'ACTION'   => 'ACTION'
-  );
-
-	return $columns;
-}
-
-public function get_hidden_columns() {
-			return array();
-		}
-
-public function get_sortable_columns() {
-		return array('NAME' => array('NAME', false));
-}
-
-private function table_data() {
-   $data            = array();
-   global $wpdb;
-   $table_name      = $wpdb->prefix . 'trip_location';
-   $trips           = $wpdb->get_results( "SELECT * FROM ".$table_name, OBJECT );
-   // $agent_id_array  = [];
-   // foreach ($agents as $agent) {
-   //   array_push($agent_id_array, $agent->user_id);
-   // }
-   // $agent_ids = implode(',', $agent_id_array);
-   //
-   // $table_name  = $wpdb->prefix . 'users';
-   // $users       = $wpdb->get_results( "SELECT * FROM ".$table_name." WHERE  `id` IN ($agent_ids)", OBJECT );
-
-
-		foreach($trips as $trip){
-			$data[] = array(
-					'NAME'      => $trip->name,
-					'ACTION'    => ''
-					// 'Action'      => '<a href="'.admin_url().'?page=cmr-edit-member&pervious_page=pending-member&id='.$user->id.'" class="button button-primary">Edit</a>&nbsp;<a href="'.admin_url().'?page=cmr-delete-member&pervious_page=pending-member&id='.$user->id.'" class="button button-primary">Delete</a>&nbsp;<a  href="'.admin_url().'?page=cmr-detail-member&id='.$user->id.'" class="button button-primary">Detail</a>'
-					);
-		}
-	return $data;
-}
-
-public function column_default( $item, $column_name ) {
-			switch( $column_name ) {
-				case 'NAME':
-				case 'ACTION':
-					return $item[ $column_name ];
-
-				default:
-					return print_r( $item, true ) ;
-			}
-		}
-
-		private function sort_data( $a, $b ) {
-			// Set defaults
-			$orderby = 'NAME';
-			$order = 'asc';
-
-			// If orderby is set, use this as the sort column
-			if(!empty($_GET['orderby']))
-			{
-				$orderby = $_GET['orderby'];
-			}
-
-			// If order is set use this as the order
-			if(!empty($_GET['order']))
-			{
-				$order = $_GET['order'];
-			}
-
-
-			$result = strnatcmp( $a[$orderby], $b[$orderby] );
-
-			if($order === 'asc')
-			{
-				return $result;
-			}
-
-			return -$result;
-		}
-	}
-
-
 ?>

@@ -6,7 +6,7 @@ function camOrderListFunction(){
 	?>
 		<div class="wrap">
 			<div id="icon-users" class="icon32"></div>
-			<h2>All Agents</h2><span>**List of all agents</span>
+			<h2>All Agents</h2><span>**List of all orders</span>
 			<form method="post">
 				<input type="hidden" name="page" value="example_list_table" />
 			</form>
@@ -66,27 +66,20 @@ class Cam_Order_List_Table extends WP_List_Table {
 	private function table_data() {
 		$data            = array();
 		global $wpdb;
-		$table_name      = $wpdb->prefix . 'usermeta';
-		$agents          = $wpdb->get_results( "SELECT * FROM ".$table_name." WHERE meta_key = 'user_type' AND meta_value = 'agent'", OBJECT );
-		$agent_id_array  = [];
-		foreach ($agents as $agent) {
-			array_push($agent_id_array, $agent->user_id);
-		}
-		$agent_ids = implode(',', $agent_id_array);
+		$table_name      = $wpdb->prefix . 'cam_orders';
+		$orders          = $wpdb->get_results( "SELECT * FROM ".$table_name, OBJECT );
 
-		$table_name  = $wpdb->prefix . 'users';
-		$users       = $wpdb->get_results( "SELECT * FROM ".$table_name." WHERE  `id` IN ($agent_ids)", OBJECT );
-
-
-		foreach($users as $user){
-			$meta_data = get_user_meta($user->ORDER NUMBER);
+		foreach($orders as $order){
+			$table_name = $wpdb->prefix . 'users';
+			$user       = $wpdb->get_results( "SELECT * FROM ".$table_name." WHERE id='".$order->user_id."'", OBJECT );
+			$meta_data  = get_user_meta($user->ID);
 			$data[] = array(
-				'ORDER NUMBER'      => $user->user_login,
-				'DATE'     => $user->user_email,
-				'NAME' 	  => $meta_data['phone'][0],
-				'ADDRESS'   => $meta_data['address'][0],
-				'COUNTRY'   => $meta_data['country'][0],
-				'ACTION'    => ''
+				'ORDER NUMBER' => $order->id,
+				'DATE'         => $order->submission_date,
+				'NAME' 	       => $user->user_login,
+				'ADDRESS'      => $meta_data['address'][0],
+				'COUNTRY'      => $meta_data['country'][0],
+				'ACTION'       => ''
 					// 'Action'      => '<a href="'.admin_url().'?page=cmr-edit-member&pervious_page=pending-member&id='.$user->id.'" class="button button-primary">Edit</a>&nbsp;<a href="'.admin_url().'?page=cmr-delete-member&pervious_page=pending-member&id='.$user->id.'" class="button button-primary">Delete</a>&nbsp;<a  href="'.admin_url().'?page=cmr-detail-member&id='.$user->id.'" class="button button-primary">Detail</a>'
 			);
 		}

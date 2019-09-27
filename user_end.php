@@ -13,7 +13,7 @@ function cam_create_new_order(){
   if (is_user_logged_in()) {
     global $wpdb;
     if ( isset( $_POST['order_submit'] ) && isset( $_POST['order_type'])) {
-      $user_id = 1;
+      $user_id = get_current_user_id();
       $order_type       = $_POST['order_type'];
       $visa_number      = $_POST['visa_number'];
       $no_of_person     = $_POST['no_of_person'];
@@ -181,7 +181,29 @@ function cam_create_new_ticket(){
 
       // last inserted id
       $lastid = $wpdb->insert_id;
-      echo 'DATA SUBMITTED '.$lastid;
+
+      /**
+      * uploading files
+      */
+      $total = count($_FILES['file']['name']);
+      // Loop through each file
+      for( $i=0 ; $i < $total ; $i++ ) {
+        //Get the temp file path
+        $tmpFilePath = $_FILES['file']['tmp_name'][$i];
+        //Make sure we have a file path
+        if ($tmpFilePath != ""){
+          $uploaded_file = wp_upload_bits( $_FILES['file']['name'][$i], null, @file_get_contents( $_FILES['file']['tmp_name'][$i] ) );
+
+          $table_name = $wpdb->prefix . 'cam_files'; //to get the table name
+
+          $wpdb->insert($table_name, array(
+             "ticket_id" => $lastid,
+             "url"      => $uploaded_file['url']
+          ));
+
+        }
+      } //file upload ends
+      echo 'Ticket successfully submitted.';
     }
 
     echo '
