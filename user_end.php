@@ -93,7 +93,7 @@ function cam_create_new_order(){
     echo '
       <form action="" method="post" enctype="multipart/form-data" style="margin-bottom: 20px; padding: 20px;">
         <label for="order_type" style="display: block; margin-bottom: 5px;">Select Order Type</label>
-        <select name="order_type" id="order_type" style="width: 400px; height: 40px;">
+        <select name="order_type" id="order_type" style="width: 100%; height: 40px; background-color: #fff; border: 1px solid #378ac4;">
           <option disabled selected>Select Order Type</option>
           <option value="visa">Visa</option>
           <option value="tourism_trip">Tourism Trip</option>
@@ -101,53 +101,53 @@ function cam_create_new_order(){
           <option value="others">Others</option>
         </select>
 
-        <div class="visa_order_form" style="display:none;">
+        <div class="visa_order_form" style="display:none; overflow: hidden; width: 100%; margin-top : 20px;">
           <label for="visa_number" style="display: block; margin-bottom: 5px;">Number Of Requested Visas</label>
-          <input type="number" name="visa_number" value="" style="width: 400px; padding: 10px;">
+          <input type="number" name="visa_number" value="" style="width: 100%; display: block; padding: 10px; -webkit-appearance: none; border: 1px solid #378ac4; -webkit-box-sizing: border-box;">
         </div>
 
-        <div class="tourism_trip" style="display:none;">
-          <label for="no_of_person" style="display: block; margin-bottom: 5px;">Number Of Persons</label>
-          <input type="number" name="no_of_person" value="" style="width: 400px; padding: 10px;">
+        <div class="tourism_trip" style="display:none; overflow: hidden; width: 100%;">
+          <label for="no_of_person" style="display: block; margin-bottom: 5px; margin-top : 20px;">Number Of Persons</label>
+          <input type="number" name="no_of_person" value="" style="width: 100%; display: block; padding: 10px; -webkit-appearance: none; border: 1px solid #378ac4; -webkit-box-sizing: border-box;">
 
-          <label for="trip_location_id" style="display: block; margin-bottom: 5px;">Select Trip Location</label>
-          <select name="trip_location_id" id="trip_location_id" style="width: 400px; height: 40px;">
+          <label for="trip_location_id" style="display: block; margin-bottom: 5px; margin-top: 20px;">Select Trip Location</label>
+          <select name="trip_location_id" id="trip_location_id" style="width: 100%; height: 40px; background-color: #fff; border: 1px solid #378ac4;">
             <option disabled selected>Select Trip Location</option>
             '.$options_html.'
             </select>
         </div>
 
         <div class="train_ticket_order_form" style="display:none;">
-          <label for="no_of_tickets" style="display: block; margin-bottom: 5px;">Number Of Requested Tickets</label>
-          <input type="number" name="no_of_tickets" value="" style="width: 400px; padding: 10px;">
+          <label for="no_of_tickets" style="display: block; margin-bottom: 5px; margin-top : 20px;">Number Of Requested Tickets</label>
+          <input type="number" name="no_of_tickets" value="" style="width: 100%; display: block; padding: 10px; -webkit-appearance: none; border: 1px solid #378ac4; -webkit-box-sizing: border-box;">
 
-          <label for="direction" style="display: block; margin-bottom: 5px;">Select Direction</label>
-          <select name="direction" id="direction" style="width: 400px; height: 40px;">
+          <label for="direction" style="display: block; margin-bottom: 5px; margin-top : 20px; ">Select Direction</label>
+          <select name="direction" id="direction" style="width: 100%; height: 40px; background-color: #fff; border: 1px solid #378ac4;">
             <option disabled selected>Select Direction</option>
             <option value="one_way">One Way</option>
             <option value="two_way">Two Way</option>
           </select>
 
-          <label for="ticket_date" style="display: block; margin-bottom: 5px;">Date</label>
-          <input type="date" name="ticket_date" id="ticket_date" value="" style="width: 400px; padding: 10px;">
+          <label for="ticket_date" style="display: block; margin-bottom: 5px; margin-top : 20px; ">Date</label>
+          <input type="date" name="ticket_date" id="ticket_date" value="" style="width: 100%; display: block; padding: 10px; -webkit-appearance: none; border: 1px solid #378ac4; -webkit-box-sizing: border-box;">
 
         </div>
 
         <div class="other_order_form" style="display:none;">
-          <label for="other_text" style="display: block; margin-bottom: 5px;">Description</label>
-          <textarea name="other_text" rows="8" cols="80"></textarea>
+          <label for="other_text" style="display: block; margin-bottom: 5px; margin-top:20px;">Description</label>
+          <textarea name="other_text" rows="5" style="border: 1px solid #378ac4; width: 100%; display: block;"></textarea>
         </div>
 
 
         <label for="passport" style="display: block; margin-top: 20px; margin-bottom: 5px;">Upload Passport</label>
-        <input name="file[]" type="file" id="passport"/>
+        <input name="file[]" type="file" id="passport" style="margin-bottom: 20px;"/>
 
-        <button class="add_more">Add More Files</button>
+        <button class="add_more" style="padding: 7px; margin-top: 0px; background-color: #378ac4; color: #fff; border-width: 0px;">Add More Files</button>
 
 
         <input name="status" type="hidden" value="pending"/>
 
-        <button type="submit" name="order_submit" value="submit" style="padding: 10px; margin-top: 20px; background-color: #20b368; color: #fff; border-width: 0px;">Submit</button>
+        <button type="submit" name="order_submit" value="submit" style="display: block;     padding: 15px 40px; margin-top: 20px; background-color: #20b368; color: #fff; border-width: 0px;">Submit</button>
       </form>
     ';
   }else {
@@ -210,17 +210,17 @@ function cam_create_new_ticket(){
       <form action="" method="post" enctype="multipart/form-data" style="margin-bottom: 20px; padding: 20px;">
 
         <div class="ticket_description">
-          <label for="ticket_description" style="display: block; margin-bottom: 5px;">Description</label>
-          <textarea name="ticket_description" rows="8" cols="80"></textarea>
+          <label for="ticket_description" style="display: block; margin-bottom: 5px; margin-top:20px;">Description</label>
+          <textarea name="ticket_description" rows="5" style="border: 1px solid #378ac4; width: 100%; display: block;"></textarea>
         </div>
 
 
         <label for="ticket_file" style="display: block; margin-top: 20px; margin-bottom: 5px;">Upload Files</label>
-        <input name="file[]" type="file" id="ticket_file"/>
-        <button class="add_more">Add More Files</button>
+        <input name="file[]" type="file" id="ticket_file" style="margin-bottom: 20px;"/>
+        <button class="add_more" style="padding: 7px; margin-top: 0px; background-color: #378ac4; color: #fff; border-width: 0px;">Add More Files</button>
 
 
-        <button type="submit" name="ticket_submit" value="submit" style="padding: 10px; margin-top: 20px; background-color: #20b368; color: #fff; border-width: 0px;">Submit</button>
+        <button type="submit" name="ticket_submit" value="submit" style="display: block;     padding: 15px 40px; margin-top: 20px; background-color: #20b368; color: #fff; border-width: 0px;">Submit</button>
       </form>
     ';
   }else {
