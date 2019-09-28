@@ -9,6 +9,12 @@ include('include/trip-list.php');
 include('include/ticket-list.php');
 include('include/agent-list.php');
 include('include/detail.php');
+
+include('include/order/other-order.php');
+include('include/order/tourism-trip.php');
+include('include/order/train-ticket-order.php');
+include('include/order/visa-order.php');
+
 //Adding menu
 add_action('admin_menu', 'cam_main_menu');
 
@@ -16,7 +22,12 @@ function cam_main_menu(){
     add_menu_page( 'Custom Agent Management Main Menu', 'Custom Agent Management', 'manage_options', 'cam-custom-agent-management-main-menu', 'mainCustomerAgentFunction' );
 	add_submenu_page("cam-custom-agent-management-main-menu", "Add Agent", "Add Agent", "manage_options", "cam-add-agent", "addAgentFunction");
 	add_submenu_page("cam-custom-agent-management-main-menu", "Agent List", "Agent List", "manage_options", "cam-agent-list", "agentListFunction");
-	add_submenu_page("cam-custom-agent-management-main-menu", "Order List", "Order List", "manage_options", "cam-order-list", "camOrderListFunction");
+
+    add_menu_page('Order List', 'Order List', 'manage_options', 'cam-order-list', 'camOrderListFunction' );
+	add_submenu_page("cam-order-list", "Visa Order", "Visa Order", "manage_options", "cam-order-visa-list", "camOrderVisaListFunction");
+    add_submenu_page("cam-order-list", "Tourism Trip Order", "Tourism Trip Order", "manage_options", "cam-order-tourism_trip-list", "camOrderTourism_tripListFunction");
+    add_submenu_page("cam-order-list", "Train Ticket Order", "Train Ticket Order", "manage_options", "cam-order-train_ticket-list", "camOrderTrain_ticketListFunction");
+    add_submenu_page("cam-order-list", "Other Order List", "Other Order List", "manage_options", "cam-order-others-list", "camOrderOtherListFunction");
 
     // Trip
     add_menu_page( 'Trip', 'Trip', 'manage_options', 'cam-trip', 'tripListFunction' );
@@ -72,6 +83,18 @@ function mainCustomerAgentFunction(){
               For showing ticket form, one has to use [cam-create-new-ticket] shortcode.
             </p>
           </li>
+          <li>
+            <p><b>3. Sign in: </b></p>
+            <p>
+                [cam-user-signin] shortcode.
+            </p>
+          </li>
+          <li>
+            <p><b>4. Agent profile: </b></p>
+            <p>
+                [cam-agent-profile] shortcode.
+            </p>
+          </li>
           
         </ul>
       </div>
@@ -96,10 +119,11 @@ function addAgentFunction(){
     $issued_visas                 = $_POST['issued_visas'];
     $additional_services_balance  = $_POST['additional_services_balance'];
 
-    $user_id    = wp_create_user( $name, $password, $email);
+    $user_id    = wp_create_user( $email, $password, $email);
 
     if ($user_id != null) {
       add_user_meta( $user_id, 'user_type', 'agent');
+      add_user_meta( $user_id, 'fullName', $name);
       add_user_meta( $user_id, 'phone', $phone);
       add_user_meta( $user_id, 'country', $country);
       add_user_meta( $user_id, 'address', $address);

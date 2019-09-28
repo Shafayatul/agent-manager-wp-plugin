@@ -7,6 +7,9 @@ function cam_enqueue_related_pages_scripts_and_styles(){
     }
 add_action('wp_enqueue_scripts','cam_enqueue_related_pages_scripts_and_styles');
 
+include('include/front/agent-login.php');
+include('include/front/agent-profile.php');
+
 //Create new order function
 function cam_create_new_order(){
   ob_start();

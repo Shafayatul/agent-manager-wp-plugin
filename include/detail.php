@@ -49,7 +49,7 @@ function camDetailItemFunction(){
 
     }elseif($table == "cam_orders"){
     	$table_name = $wpdb->prefix . $table;
-	    $order = $wpdb->get_row( "SELECT * FROM ".$table_name." WHERE id='1'", OBJECT );
+	    $order = $wpdb->get_row( "SELECT * FROM ".$table_name." WHERE id='".$id."'", OBJECT );
 
 	    $table_name = $wpdb->prefix . 'cam_files';
 	    $files = $wpdb->get_results( "SELECT * FROM ".$table_name." WHERE order_id='".$id."'", OBJECT );
@@ -73,68 +73,67 @@ function camDetailItemFunction(){
 	          <li>
 	            <p><b>Detail: </b></p>
 	            <p>
-	              '.
-	              $order->order_type.'
+	              '.strtoupper(str_replace('_', ' ', $order->order_type)).'
                 </p>
               </li>
 	          <li>
-	            <p><b>Detail: </b></p>
+	            <p><b>Visa Number: </b></p>
 	            <p>
 	              '.
 	              $order->visa_number.'
                 </p>
               </li>
 	          <li>
-	            <p><b>Detail: </b></p>
+	            <p><b>No of person: </b></p>
 	            <p>
 	              '.
 	              $order->no_of_person.'
                 </p>
               </li>
 	          <li>
-	            <p><b>Detail: </b></p>
+	            <p><b>Trip Location id: </b></p>
 	            <p>
 	              '.
 	              $order->trip_location_id.'
                 </p>
               </li>
 	          <li>
-	            <p><b>Detail: </b></p>
+	            <p><b>No of ticket: </b></p>
 	            <p>
 	              '.
 	              $order->no_of_tickets.'
                 </p>
               </li>
 	          <li>
-	            <p><b>Detail: </b></p>
+	            <p><b>Direction: </b></p>
 	            <p>
 	              '.
 	              $order->direction.'
                 </p>
               </li>
 	          <li>
-	            <p><b>Detail: </b></p>
+	            <p><b>TIcket date: </b></p>
 	            <p>
 	              '.
 	              $order->ticket_date.'
                 </p>
               </li>
 	          <li>
-	            <p><b>Detail: </b></p>
+	            <p><b>Other: </b></p>
 	            <p>
 	              '.
 	              $order->other_text.'
                 </p>
               </li>
 	          <li>
-	            <p><b>Detail: </b></p>
+	            <p><b>Status: </b></p>
 	            <p>
 	              '.
 	              $order->status.'
                 </p>
               </li>
 	          <li>
-	            <p><b>Detail: </b></p>
+	            <p><b>Submission Date: </b></p>
 	            <p>
 	              '.
 	              $order->submission_date.'
