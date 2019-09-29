@@ -14,6 +14,8 @@ include('include/order/other-order.php');
 include('include/order/tourism-trip.php');
 include('include/order/train-ticket-order.php');
 include('include/order/visa-order.php');
+include('include/order/order-list-by-user.php');
+include('include/order/change-order-status.php');
 
 //Adding menu
 add_action('admin_menu', 'cam_main_menu');
@@ -28,6 +30,8 @@ function cam_main_menu(){
     add_submenu_page("cam-order-list", "Tourism Trip Order", "Tourism Trip Order", "manage_options", "cam-order-tourism_trip-list", "camOrderTourism_tripListFunction");
     add_submenu_page("cam-order-list", "Train Ticket Order", "Train Ticket Order", "manage_options", "cam-order-train_ticket-list", "camOrderTrain_ticketListFunction");
     add_submenu_page("cam-order-list", "Other Order List", "Other Order List", "manage_options", "cam-order-others-list", "camOrderOtherListFunction");
+    add_submenu_page(null, "Order List By User", "Order List By User", "manage_options", "cam-order-list-by-user", "camOrderByUserIdListFunction");
+    add_submenu_page(null, "Change Order Status", "Change Order Status", "manage_options", "cam-change-order-status", "camChangeOrderStatus");
 
     // Trip
     add_menu_page( 'Trip', 'Trip', 'manage_options', 'cam-trip', 'tripListFunction' );
@@ -74,25 +78,31 @@ function mainCustomerAgentFunction(){
           <li>
             <p><b>1. Offer form: </b></p>
             <p>
-              This shortcode is used for the order form. Copy and paste <b>[cam-create-new-order]</b> where you want to use the offer form.
+              Shortcode: <b>[cam-create-new-order]</b>
             </p>
           </li>
           <li>
             <p><b>2. Ticket form: </b></p>
             <p>
-              For showing ticket form, one has to use [cam-create-new-ticket] shortcode.
+              Shortcode: <b>[cam-create-new-ticket]</b>
             </p>
           </li>
           <li>
             <p><b>3. Sign in: </b></p>
             <p>
-                [cam-user-signin] shortcode.
+                Shortcode: <b>[cam-user-signin]</b>
             </p>
           </li>
           <li>
             <p><b>4. Agent profile: </b></p>
             <p>
-                [cam-agent-profile] shortcode.
+                Shortcode: <b>[cam-agent-profile]</b>
+            </p>
+          </li>
+          <li>
+            <p><b>5. Agent order list: </b></p>
+            <p>
+                Shortcode: <b>[cam-agent-order-list]</b>
             </p>
           </li>
           

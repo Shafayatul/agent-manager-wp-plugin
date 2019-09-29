@@ -6,7 +6,7 @@ function camOrderTrain_ticketListFunction(){
 	?>
 		<div class="wrap">
 			<div id="icon-users" class="icon32"></div>
-			<h2>All Agents</h2><span>**List of all orders</span>
+			<h2>Train Ticket Orders</h2>
 			<form method="post">
 				<input type="hidden" name="page" value="example_list_table" />
 			</form>
@@ -77,8 +77,9 @@ class Cam_Order_train_ticket_List_Table extends WP_List_Table {
 				'ORDER NUMBER' => $order->id,
 				'DATE'         => $order->submission_date,
 				'NAME' 	       => isset($meta_data['fullName'][0])? $meta_data['fullName'][0]: '--',
-				'STATUS'       => isset($meta_data['address'][0])? $meta_data['address'][0]: '--',
+				'STATUS'       => $order->status,
 				'ACTION'       => '
+				<a  href="'.admin_url().'?page=cam-change-order-status&order_id='.$order->id.'" class="button button-primary">Change Status</a>&nbsp;
 					<a  href="'.admin_url().'?page=cam-detail-item&table=cam_orders&id='.$order->id.'" class="button button-primary">Detail</a>&nbsp;
 					<a href="'.admin_url().'?page=cam-delete-item&table=cam_orders&id='.$order->id.'" class="button button-primary">Delete</a>'
 			);

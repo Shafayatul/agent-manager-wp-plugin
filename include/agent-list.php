@@ -89,7 +89,8 @@ private function table_data() {
 					'PHONE'   => $meta_data['phone'][0],
 					'ADDRESS' => $meta_data['address'][0],
 					'COUNTRY' => $meta_data['country'][0],
-					'ACTION'  => '<a href="'.admin_url().'?page=cam-delete-item&table=users&id='.$user->ID.'" class="button button-primary">Delete</a>'
+					'ACTION'  => '<a href="'.admin_url().'?page=cam-order-list-by-user&user_id='.$user->ID.'" class="button button-primary">Order List</a>&nbsp;
+						<a href="'.admin_url().'?page=cam-delete-item&table=users&id='.$user->ID.'" class="button button-primary">Delete</a>'
 					);
 		}
 	return $data;

@@ -9,6 +9,7 @@ add_action('wp_enqueue_scripts','cam_enqueue_related_pages_scripts_and_styles');
 
 include('include/front/agent-login.php');
 include('include/front/agent-profile.php');
+include('include/front/user-order-list.php');
 
 //Create new order function
 function cam_create_new_order(){
@@ -80,7 +81,101 @@ function cam_create_new_order(){
         }
       } //file upload ends
 
+      // Email notifications
+      $to        = "mdshafayatul@gmail.com";
+      $subject   = "New Order";
+      // Always set content-type when sending HTML email
+      $headers   = "MIME-Version: 1.0" . "\r\n";
+      $headers  .= "Content-type:text/html;charset=UTF-8" . "\r\n";
+
+      $message   = '
+      <html>
+        <head>
+          <title>New Order</title>
+        </head>
+        <body>
+          <p>This email contains HTML Tags!</p>
+          <table>
+            <tr>
+              <th style="width: 50%;">
+                Field Name
+              </th>
+              <td style="width: 50%;">
+                Value
+              </td>
+            </tr>
+            <tr>
+              <th style="width: 50%;">
+                Type
+              </th>
+              <td style="width: 50%;">
+                '.$order_type.'
+              </td>
+            </tr>
+            <tr>
+              <th style="width: 50%;">
+                Visa
+              </th>
+              <td style="width: 50%;">
+                '.$visa_number.'
+              </td>
+            </tr>
+            <tr>
+              <th style="width: 50%;">
+                No. of person
+              </th>
+              <td style="width: 50%;">
+                '.$no_of_person.'
+              </td>
+            </tr>
+            <tr>
+              <th style="width: 50%;">
+                Trip location
+              </th>
+              <td style="width: 50%;">
+                '.$trip_location_id.'
+              </td>
+            </tr>
+            <tr>
+              <th style="width: 50%;">
+                No of ticket
+              </th>
+              <td style="width: 50%;">
+                '.$no_of_tickets.'
+              </td>
+            </tr>
+            <tr>
+              <th style="width: 50%;">
+                Direction
+              </th>
+              <td style="width: 50%;">
+                '.$direction.'
+              </td>
+            </tr>
+            <tr>
+              <th style="width: 50%;">
+                Ticket date
+              </th>
+              <td style="width: 50%;">
+                '.$ticket_date.'
+              </td>
+            </tr>
+            <tr>
+              <th style="width: 50%;">
+                Other Text
+              </th>
+              <td style="width: 50%;">
+                '.$other_text.'
+              </td>
+            </tr>
+          </table>
+        </body>
+      </html>
+      ';
+
+        wp_mail($to, $subject, $message, $headers = '');
         echo "Order Added Successfully Added Successfully";
+
       }
 
     }
@@ -90,7 +185,7 @@ function cam_create_new_order(){
 
     $options_html = '';
     foreach ($trips as $trip) {
-      $options_html = $options_html.'<option value="'.$trip->id.'">'.$trip->name.'<options>';
+      $options_html = $options_html.'<option value="'.$trip->name.'">'.$trip->name.'<options>';
     }
 
     echo '
@@ -148,7 +243,7 @@ function cam_create_new_order(){
         <button class="add_more" style="padding: 7px; margin-top: 0px; background-color: #378ac4; color: #fff; border-width: 0px;">Add More Files</button>
 
 
-        <input name="status" type="hidden" value="pending"/>
+        <input name="status" type="hidden" value="PENDING"/>
 
         <button type="submit" name="order_submit" value="submit" style="display: block;     padding: 15px 40px; margin-top: 20px; background-color: #20b368; color: #fff; border-width: 0px;">Submit</button>
       </form>

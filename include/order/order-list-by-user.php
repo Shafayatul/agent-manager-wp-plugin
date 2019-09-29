@@ -1,23 +1,23 @@
 <?php
 ob_start();
-function camOrderOtherListFunction(){
-	$cam_display_others_order_table = new Cam_others_Order_List_Table();
-	$cam_display_others_order_table->prepare_items();
+function camOrderByUserIdListFunction(){
+	$cam_display_order_By_User_Id_table = new Cam_Order_By_User_Id_List_Table();
+	$cam_display_order_By_User_Id_table->prepare_items();
 	?>
 		<div class="wrap">
 			<div id="icon-users" class="icon32"></div>
-			<h2>Other Orders</h2>
+			<h2>Orders</h2><span>**List by agent</span>
 			<form method="post">
 				<input type="hidden" name="page" value="example_list_table" />
 			</form>
-			<?php $cam_display_others_order_table->display(); ?>
+			<?php $cam_display_order_By_User_Id_table->display(); ?>
 		</div>
 	<?php
 }
 
 
 //Create a new table class that will extend the WP_List_Table
-class Cam_others_Order_List_Table extends WP_List_Table {
+class Cam_Order_By_User_Id_List_Table extends WP_List_Table {
 	public function prepare_items()
 	{
 		$columns               = $this->get_columns();
@@ -64,22 +64,25 @@ class Cam_others_Order_List_Table extends WP_List_Table {
 	}
 
 	private function table_data() {
-		$data            = array();
 		global $wpdb;
+
+		$data            = array();
+		$user_id = $_GET['user_id'];
 		$table_name      = $wpdb->prefix . 'cam_orders';
-		$orders          = $wpdb->get_results( "SELECT * FROM ".$table_name." WHERE order_type='others'", OBJECT );
+		$orders          = $wpdb->get_results( "SELECT * FROM ".$table_name." WHERE user_id='".$user_id."'", OBJECT );
+
+		$table_name = $wpdb->prefix . 'users';
+		$user       = $wpdb->get_results( "SELECT * FROM ".$table_name." WHERE id='".$order->user_id."'", OBJECT );
+		$meta_data  = get_user_meta($order->user_id);
 
 		foreach($orders as $order){
-			$table_name = $wpdb->prefix . 'users';
-			$user       = $wpdb->get_results( "SELECT * FROM ".$table_name." WHERE id='".$order->user_id."'", OBJECT );
-			$meta_data  = get_user_meta($order->user_id);
 			$data[] = array(
 				'ORDER NUMBER' => $order->id,
 				'DATE'         => $order->submission_date,
 				'NAME' 	       => isset($meta_data['fullName'][0])? $meta_data['fullName'][0]: '--',
 				'STATUS'       => $order->status,
 				'ACTION'       => '
-				<a  href="'.admin_url().'?page=cam-change-order-status&order_id='.$order->id.'" class="button button-primary">Change Status</a>&nbsp;
+					<a  href="'.admin_url().'?page=cam-change-order-status&order_id='.$order->id.'" class="button button-primary">Change Status</a>&nbsp;
 					<a  href="'.admin_url().'?page=cam-detail-item&table=cam_orders&id='.$order->id.'" class="button button-primary">Detail</a>&nbsp;
 					<a href="'.admin_url().'?page=cam-delete-item&table=cam_orders&id='.$order->id.'" class="button button-primary">Delete</a>'
 			);

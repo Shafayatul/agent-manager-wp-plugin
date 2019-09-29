@@ -77,8 +77,9 @@ class Cam_Order_List_Table extends WP_List_Table {
 				'ORDER NUMBER' => $order->id,
 				'DATE'         => $order->submission_date,
 				'NAME' 	       => isset($meta_data['fullName'][0])? $meta_data['fullName'][0]: '--',
-				'STATUS'       => isset($meta_data['address'][0])? $meta_data['address'][0]: '--',
+				'STATUS'       => $order->status,
 				'ACTION'       => '
+				<a  href="'.admin_url().'?page=cam-change-order-status&order_id='.$order->id.'" class="button button-primary">Change Status</a>&nbsp;
 					<a  href="'.admin_url().'?page=cam-detail-item&table=cam_orders&id='.$order->id.'" class="button button-primary">Detail</a>&nbsp;
 					<a href="'.admin_url().'?page=cam-delete-item&table=cam_orders&id='.$order->id.'" class="button button-primary">Delete</a>'
 			);
