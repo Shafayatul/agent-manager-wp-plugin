@@ -1,12 +1,20 @@
 <?php
 ob_start();
 function camOrderListFunction(){
+	?>
+		<div class="wrap">
+			<div id="icon-users" class="icon32"></div>
+			<h2>All Orders</h2><span>You will see order menu according to admin permission</span>
+		</div>
+<?php
+}
+function camOrderListFunctionOLD(){
 	$cam_display_order_table = new Cam_Order_List_Table();
 	$cam_display_order_table->prepare_items();
 	?>
 		<div class="wrap">
 			<div id="icon-users" class="icon32"></div>
-			<h2>All Agents</h2><span>**List of all orders</span>
+			<h2>All Orders</h2><span>**List of all orders</span>
 			<form method="post">
 				<input type="hidden" name="page" value="example_list_table" />
 			</form>

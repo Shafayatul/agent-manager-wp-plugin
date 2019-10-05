@@ -21,24 +21,24 @@ include('include/order/change-order-status.php');
 add_action('admin_menu', 'cam_main_menu');
 
 function cam_main_menu(){
-    add_menu_page( 'Custom Agent Management Main Menu', 'Custom Agent Management', 'manage_options', 'cam-custom-agent-management-main-menu', 'mainCustomerAgentFunction' );
-	add_submenu_page("cam-custom-agent-management-main-menu", "Add Agent", "Add Agent", "manage_options", "cam-add-agent", "addAgentFunction");
-	add_submenu_page("cam-custom-agent-management-main-menu", "Agent List", "Agent List", "manage_options", "cam-agent-list", "agentListFunction");
+    add_menu_page( 'Custom Agent Management Main Menu', 'Custom Agent Management', 'manage_agents', 'cam-custom-agent-management-main-menu', 'mainCustomerAgentFunction' );
+	add_submenu_page("cam-custom-agent-management-main-menu", "Add Agent", "Add Agent", "manage_add_agents", "cam-add-agent", "addAgentFunction");
+	add_submenu_page("cam-custom-agent-management-main-menu", "Agent List", "Agent List", "manage_list_agents", "cam-agent-list", "agentListFunction");
 
-    add_menu_page('Order List', 'Order List', 'manage_options', 'cam-order-list', 'camOrderListFunction' );
-	add_submenu_page("cam-order-list", "Visa Order", "Visa Order", "manage_options", "cam-order-visa-list", "camOrderVisaListFunction");
-    add_submenu_page("cam-order-list", "Tourism Trip Order", "Tourism Trip Order", "manage_options", "cam-order-tourism_trip-list", "camOrderTourism_tripListFunction");
-    add_submenu_page("cam-order-list", "Train Ticket Order", "Train Ticket Order", "manage_options", "cam-order-train_ticket-list", "camOrderTrain_ticketListFunction");
-    add_submenu_page("cam-order-list", "Other Order List", "Other Order List", "manage_options", "cam-order-others-list", "camOrderOtherListFunction");
+    add_menu_page('Order List', 'Order List', 'manage_orders', 'cam-order-list', 'camOrderListFunction' );
+	add_submenu_page("cam-order-list", "Visa Order", "Visa Order", "manage_visa_orders", "cam-order-visa-list", "camOrderVisaListFunction");
+    add_submenu_page("cam-order-list", "Tourism Trip Order", "Tourism Trip Order", "manage_trip_orders", "cam-order-tourism_trip-list", "camOrderTourism_tripListFunction");
+    add_submenu_page("cam-order-list", "Train Ticket Order", "Train Ticket Order", "manage_train_ticket_orders", "cam-order-train_ticket-list", "camOrderTrain_ticketListFunction");
+    add_submenu_page("cam-order-list", "Other Order List", "Other Order List", "manage_other_orders", "cam-order-others-list", "camOrderOtherListFunction");
     add_submenu_page(null, "Order List By User", "Order List By User", "manage_options", "cam-order-list-by-user", "camOrderByUserIdListFunction");
     add_submenu_page(null, "Change Order Status", "Change Order Status", "manage_options", "cam-change-order-status", "camChangeOrderStatus");
 
     // Trip
-    add_menu_page( 'Trip', 'Trip', 'manage_options', 'cam-trip', 'tripListFunction' );
-    add_submenu_page("cam-trip", "Add Trip", "Add Trip", "manage_options", "cam-add-trip", "addTripFunction");
+    add_menu_page( 'Trip', 'Trip', 'manage_trip', 'cam-trip', 'tripListFunction' );
+    add_submenu_page("cam-trip", "Add Trip", "Add Trip", "manage_trip", "cam-add-trip", "addTripFunction");
 
     // Ticket
-    add_menu_page( 'Tickets', 'Tickets', 'manage_options', 'cam-ticket', 'ticketListFunction' );
+    add_menu_page( 'Tickets', 'Tickets', 'manage_tickets', 'cam-ticket', 'ticketListFunction' );
 
     // page without sidebar menu position
     add_submenu_page(null, "Delete Item", "Delete Item", "manage_options", "cam-delete-item", "camDeleteItemFunction");

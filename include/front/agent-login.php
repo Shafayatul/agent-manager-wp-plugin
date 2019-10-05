@@ -35,17 +35,17 @@ function cam_user_sign_in(){
 
 	echo $message;
 	echo '
-	<form action="" method="post" enctype="multipart/form-data" style="margin-bottom: 20px; padding: 20px;">
+	<form action="" method="post" enctype="multipart/form-data" style="width: 100%; margin: 20px auto; padding: 20px;">
 
 	<div class="visa_order_form" style="overflow: hidden; width: 100%; margin-top : 20px;">
-	<label for="user_email" style="display: block; margin-bottom: 5px;">Email:</label>
-	<input type="text" name="user_email" value="" style="width: 100%; display: block; padding: 10px; -webkit-appearance: none; border: 1px solid #378ac4; -webkit-box-sizing: border-box;">
+	<label for="user_email" style="display: block; margin-bottom: 5px; font-size: 20px; font-weight: 400;">EMAIL:</label>
+	<input type="text" name="user_email" value="" style="width: 100%; display: block; height: 60px; background-color: #fff; border: 1px solid #ececec; box-shadow: 0px 10px 10px -10px rgba(0,0,0,0.4); margin-bottom : 40px; padding: 10px; -webkit-box-sizing: border-box;">
 	</div>
 
 
 	<div class="visa_order_form" style="overflow: hidden; width: 100%; margin-top : 20px;">
-	<label for="user_password" style="display: block; margin-bottom: 5px;">Password</label>
-	<input type="password" name="user_password" value="" style="width: 100%; display: block; padding: 10px; -webkit-appearance: none; border: 1px solid #378ac4; -webkit-box-sizing: border-box;">
+	<label for="user_password" style="display: block; margin-bottom: 5px; font-size: 20px; font-weight: 400;">PASSWORD</label>
+	<input type="password" name="user_password" value="" style="width: 100%; display: block; height: 60px; background-color: #fff; border: 1px solid #ececec; box-shadow: 0px 10px 10px -10px rgba(0,0,0,0.4); margin-bottom : 40px; padding: 10px; -webkit-box-sizing: border-box;">
 	</div>
 
 

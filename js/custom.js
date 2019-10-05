@@ -1,4 +1,5 @@
 jQuery(document).ready(function() {
+
   jQuery('#order_type').on('change', function(){
     var order_type = jQuery('#order_type').val();
 
@@ -42,6 +43,6 @@ jQuery(document).ready(function() {
 
   jQuery('.add_more').click(function(e){
         e.preventDefault();
-        jQuery(this).before("<input name='file[]' type='file' />");
+        jQuery(this).before("<input name='file[]' type='file' style='width: 300px !important;'/>");
   });
 });
